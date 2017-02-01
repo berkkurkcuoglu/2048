@@ -1,26 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rzU-Eh-ols" customClass="Table">
+                                <rect key="frame" x="26.712871287133567" y="162" width="360" height="360.00000000000006"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="hGS-RQ-7ps" appends="YES" id="QZR-Xv-VDV"/>
+                            <outletCollection property="gestureRecognizers" destination="JsG-Jn-5my" appends="YES" id="8j2-hd-R77"/>
+                            <outletCollection property="gestureRecognizers" destination="BLF-Nn-rKg" appends="YES" id="XY8-6B-q9g"/>
+                            <outletCollection property="gestureRecognizers" destination="sYM-Mh-9Kj" appends="YES" id="Wf6-ig-VYp"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="downSwipe" destination="BLF-Nn-rKg" id="hqc-66-vBZ"/>
+                        <outlet property="leftSwipe" destination="sYM-Mh-9Kj" id="GCZ-b7-cJr"/>
+                        <outlet property="rightSwipe" destination="JsG-Jn-5my" id="TnR-PF-Wmr"/>
+                        <outlet property="table" destination="rzU-Eh-ols" id="y7Z-Za-ETE"/>
+                        <outlet property="upSwipe" destination="hGS-RQ-7ps" id="uBz-FS-pDl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="up" id="hGS-RQ-7ps">
+                    <connections>
+                        <action selector="upSwiped:" destination="BYZ-38-t0r" id="YHy-yK-pI8"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="JsG-Jn-5my">
+                    <connections>
+                        <action selector="rightSwiped:" destination="BYZ-38-t0r" id="y9f-bL-grs"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="BLF-Nn-rKg">
+                    <connections>
+                        <action selector="downSwiped:" destination="BYZ-38-t0r" id="TAt-hj-8ym"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="sYM-Mh-9Kj">
+                    <connections>
+                        <action selector="leftSwiped:" destination="BYZ-38-t0r" id="ptc-rq-K0S"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="117.39130434782609" y="122.28260869565219"/>
         </scene>
     </scenes>
 </document>

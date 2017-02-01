@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Table.h"
 
 @interface ViewController : UIViewController
 
+
+@property (weak, nonatomic) IBOutlet Table *table;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *upSwipe;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *rightSwipe;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *downSwipe;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *leftSwipe;
 
 @end
 
