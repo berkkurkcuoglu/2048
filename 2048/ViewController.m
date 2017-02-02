@@ -27,161 +27,265 @@
 }
 
 - (IBAction)upSwiped:(id)sender {
+    bool valid = false;
     Tile *tile1,*tile2;
     NSInteger tileValue1,tileValue2;
-    for(int i=0;i < 4; i++){
-        for(int j=0;j < 4; j++){
-            if(i <= 0)
+    for(int i=1;i<4;i++){
+        for(int j=0; j<4 ; j++){
+            tile1 = [_table.tiles objectAtIndex:4*i+j];
+            if(tile1.empty)
                 continue;
-            int index1 = 4*i+j-4;
-            int index2 = 4*i+j;
-            tile1 = [_table.tiles objectAtIndex:index1];
-            tile2 = [_table.tiles objectAtIndex:index2];
-            if(!tile1.empty && !tile2.empty){
+            NSLog(@"tile1: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+            for(int k=0; k< i ; k++){
+                if( k> 0)
+                    tile2 = [_table getUp:tile2];
+                else
+                    tile2 = [_table getUp:tile1];
+                NSLog(@"tile2: %lu", (unsigned long)[_table.tiles indexOfObject:tile2]);
+                if(!tile2.empty){
+                    break;
+                }
+                
+            }
+            if(!tile2.empty){
                 if([_table compValues:tile1 :tile2]){
+                    NSLog(@"tile11: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                    NSLog(@"tile22: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                     tileValue1 = [tile1.valueLabel.text integerValue];
                     tileValue2 = [tile2.valueLabel.text integerValue];
-                    [tile1.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
-                    [tile2.valueLabel setText:nil];
-                    tile1.empty = false;
-                    tile2.empty = true;
+                    [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
+                    [tile1.valueLabel setText:@""];
+                    tile1.empty = true;
+                    tile2.empty = false;
+                    valid = true;
+                }
+                else{
+                    tile2 = [_table getDown:tile2];
+                    if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
+                        NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                        NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
+                        tileValue2 = [tile1.valueLabel.text integerValue];
+                        [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
+                        [tile1.valueLabel setText:nil];
+                        tile2.empty = false;
+                        tile1.empty = true;
+                        valid = true;
+                    }
                 }
             }
-            /*else if(tile1.empty && !tile2.empty){
-                while(tile1.empty && index1 > 4){
-                    index1 -= 4;
-                    tile1 = [_table.tiles objectAtIndex:index1];
-                }
-                tileValue2 = [tile2.valueLabel.text integerValue];
-                [tile1.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
-                [tile2.valueLabel setText:nil];
-                tile1.empty = false;
-                tile2.empty = true;
-            }*/
-        }
-    }
-    for(int i=0;i < 4; i++){
-        for(int j=0;j < 4; j++){
-            if(i <= 0)
-                continue;
-            int index1 = 4*i+j-4;
-            int index2 = 4*i+j;
-            tile1 = [_table.tiles objectAtIndex:index1];
-            tile2 = [_table.tiles objectAtIndex:index2];
-            if(!tile2.empty && tile1.empty){
-                while(tile1.empty && index1 >= 4){
-                    index1 -= 4;
-                    tile1 = [_table.tiles objectAtIndex:index1];
-                }
-                tileValue2 = [tile2.valueLabel.text integerValue];
-                [tile1.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
-                [tile2.valueLabel setText:nil];
-                tile1.empty = false;
-                tile2.empty = true;
+            else{
+                //if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
+                NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
+                tileValue2 = [tile1.valueLabel.text integerValue];
+                [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
+                [tile1.valueLabel setText:nil];
+                tile2.empty = false;
+                tile1.empty = true;
+                valid = true;
+                //}
             }
+            
         }
     }
-    [_table addNum];
+    if(valid)
+        [_table addNum];
 
 }
 - (IBAction)rightSwiped:(id)sender {
+    bool valid = false;
     Tile *tile1,*tile2;
     NSInteger tileValue1,tileValue2;
-    for(int i=0;i < 4; i++){
-        for(int j=0;j < 4; j++){
-            if(j >=3)
-                continue;
+    for(int i=0;i<4;i++){
+        for(int j=2; j>=0 ; j--){
             tile1 = [_table.tiles objectAtIndex:4*i+j];
-            tile2 = [_table.tiles objectAtIndex:(4*i+j+1)];
-            if(!tile1.empty && !tile2.empty){
+            if(tile1.empty)
+                continue;
+            NSLog(@"tile1: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+            for(int k=0; k< 3-j ; k++){
+                if( k> 0)
+                    tile2 = [_table getRight:tile2];
+                else
+                    tile2 = [_table getRight:tile1];
+                NSLog(@"tile2: %lu", (unsigned long)[_table.tiles indexOfObject:tile2]);
+                if(!tile2.empty){
+                    break;
+                }
+                
+            }
+            if(!tile2.empty){
                 if([_table compValues:tile1 :tile2]){
+                    NSLog(@"tile11: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                    NSLog(@"tile22: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                     tileValue1 = [tile1.valueLabel.text integerValue];
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
-                    [tile1.valueLabel setText:nil];
-                    tile2.empty = false;
+                    [tile1.valueLabel setText:@""];
                     tile1.empty = true;
+                    tile2.empty = false;
+                    valid = true;
+                }
+                else{
+                    tile2 = [_table getLeft:tile2];
+                    if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
+                        NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                        NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
+                        tileValue2 = [tile1.valueLabel.text integerValue];
+                        [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
+                        [tile1.valueLabel setText:nil];
+                        tile2.empty = false;
+                        tile1.empty = true;
+                        valid = true;
+                    }
                 }
             }
-            else if(!tile1.empty && tile2.empty){
+            else{
+                //if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
+                NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
-                tile1.empty = true;
                 tile2.empty = false;
+                tile1.empty = true;
+                valid = true;
+                //}
             }
-
+            
         }
     }
-     [_table addNum];
+    if(valid)
+        [_table addNum];
 }
 - (IBAction)downSwiped:(id)sender {
+    bool valid = false;
     Tile *tile1,*tile2;
     NSInteger tileValue1,tileValue2;
-    for(int i=3;i >= 0; i--){
-        for(int j=3;j >= 0; j--){
-            if(i <= 0)
-                continue;
+    for(int i=2;i>=0;i--){
+        for(int j=0; j<4 ; j++){
             tile1 = [_table.tiles objectAtIndex:4*i+j];
-            tile2 = [_table.tiles objectAtIndex:(4*i+j-4)];
-            if(tile1.valueLabel.text != nil && tile2.valueLabel.text != nil){
-                tileValue1 = [tile1.valueLabel.text integerValue];
-                tileValue2 = [tile2.valueLabel.text integerValue];
-                [tile1.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
-                [tile2.valueLabel setText:nil];
-            }
-            if(!tile1.empty && !tile2.empty){
-                if([_table compValues:tile1 :tile2]){
-                    tileValue1 = [tile1.valueLabel.text integerValue];
-                    tileValue2 = [tile2.valueLabel.text integerValue];
-                    [tile1.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
-                    [tile2.valueLabel setText:nil];
-                    tile1.empty = false;
-                    tile2.empty = true;
+            if(tile1.empty)
+                continue;
+            NSLog(@"tile1: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+            for(int k=0; k< 3-i ; k++){
+                if( k> 0)
+                    tile2 = [_table getDown:tile2];
+                else
+                    tile2 = [_table getDown:tile1];
+                NSLog(@"tile2: %lu", (unsigned long)[_table.tiles indexOfObject:tile2]);
+                if(!tile2.empty){
+                    break;
                 }
+                
             }
-            else if(tile1.empty && !tile2.empty){
-                tileValue2 = [tile2.valueLabel.text integerValue];
-                [tile1.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
-                [tile2.valueLabel setText:nil];
-                tile1.empty = false;
-                tile2.empty = true;
-            }
-
-        }
-    }
-     [_table addNum];
-}
-- (IBAction)leftSwiped:(id)sender {
-    Tile *tile1,*tile2;
-    NSInteger tileValue1,tileValue2;
-    for(int i=0;i < 4; i++){
-        for(int j=0;j < 4; j++){
-            if(j <= 0)
-                continue;
-            tile1 = [_table.tiles objectAtIndex:4*i+j];
-            tile2 = [_table.tiles objectAtIndex:(4*i+j-1)];
-            if(!tile1.empty && !tile2.empty){
+            if(!tile2.empty){
                 if([_table compValues:tile1 :tile2]){
+                    NSLog(@"tile11: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                    NSLog(@"tile22: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                     tileValue1 = [tile1.valueLabel.text integerValue];
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
-                    [tile1.valueLabel setText:nil];
-                    tile2.empty = false;
+                    [tile1.valueLabel setText:@""];
                     tile1.empty = true;
+                    tile2.empty = false;
+                    valid = true;
+                }
+                else{
+                    tile2 = [_table getUp:tile2];
+                    if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
+                        NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                        NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
+                        tileValue2 = [tile1.valueLabel.text integerValue];
+                        [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
+                        [tile1.valueLabel setText:nil];
+                        tile2.empty = false;
+                        tile1.empty = true;
+                        valid = true;
+                    }
                 }
             }
-            else if(!tile1.empty && tile2.empty){
+            else{
+                //if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
+                NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
-                tile1.empty = true;
                 tile2.empty = false;
+                tile1.empty = true;
+                valid = true;
+                //}
             }
-
+            
         }
     }
-     [_table addNum];
+    if(valid)
+        [_table addNum];
+}
+- (IBAction)leftSwiped:(id)sender {
+    bool valid = false;
+    Tile *tile1,*tile2;
+    NSInteger tileValue1,tileValue2;
+    for(int i=0;i<4;i++){
+        for(int j=1; j<4 ; j++){
+            tile1 = [_table.tiles objectAtIndex:4*i+j];
+            if(tile1.empty)
+                continue;
+            NSLog(@"tile1: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+            for(int k=0; k<j ; k++){
+                if( k> 0)
+                    tile2 = [_table getLeft:tile2];
+                else
+                    tile2 = [_table getLeft:tile1];
+                NSLog(@"tile2: %lu", (unsigned long)[_table.tiles indexOfObject:tile2]);
+                if(!tile2.empty){
+                    break;
+                }
+                
+            }
+            if(!tile2.empty){
+                if([_table compValues:tile1 :tile2]){
+                    NSLog(@"tile11: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                    NSLog(@"tile22: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
+                    tileValue1 = [tile1.valueLabel.text integerValue];
+                    tileValue2 = [tile2.valueLabel.text integerValue];
+                    [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
+                    [tile1.valueLabel setText:@""];
+                    tile1.empty = true;
+                    tile2.empty = false;
+                    valid = true;
+                }
+                else{
+                    tile2 = [_table getRight:tile2];
+                    if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
+                        NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                        NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
+                        tileValue2 = [tile1.valueLabel.text integerValue];
+                        [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
+                        [tile1.valueLabel setText:nil];
+                        tile2.empty = false;
+                        tile1.empty = true;
+                        valid = true;
+                    }
+                }
+            }
+            else{
+                //if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
+                NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
+                NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
+                tileValue2 = [tile1.valueLabel.text integerValue];
+                [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
+                [tile1.valueLabel setText:nil];
+                tile2.empty = false;
+                tile1.empty = true;
+                valid = true;
+                //}
+            }
+            
+        }
+    }
+    if(valid)
+        [_table addNum];
 }
 
 @end

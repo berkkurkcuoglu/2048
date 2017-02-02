@@ -18,4 +18,8 @@
 -(bool)compValues:(Tile*) tile1 :(Tile*) tile2;
 -(void)addNum;
 -(NSMutableArray*)emptyTiles;
+-(Tile*)getUp:(Tile*) tile1;
+-(Tile*)getRight:(Tile*) tile1;
+-(Tile*)getDown:(Tile*) tile1;
+-(Tile*)getLeft:(Tile*) tile1;
 @end

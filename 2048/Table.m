@@ -66,6 +66,26 @@
     return (tileValue1 == tileValue2);
 }
 
+-(Tile*)getUp:(Tile*) tile1{
+    NSInteger anIndex=[_tiles indexOfObject:tile1];
+    return [_tiles objectAtIndex:anIndex-4];
+}
+
+-(Tile*)getRight:(Tile*) tile1{
+    NSInteger anIndex=[_tiles indexOfObject:tile1];
+    return [_tiles objectAtIndex:anIndex+1];
+}
+
+-(Tile*)getDown:(Tile*) tile1{
+    NSInteger anIndex=[_tiles indexOfObject:tile1];
+    return [_tiles objectAtIndex:anIndex+4];
+}
+
+-(Tile*)getLeft:(Tile*) tile1{
+    NSInteger anIndex=[_tiles indexOfObject:tile1];
+    return [_tiles objectAtIndex:anIndex-1];
+}
+
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
