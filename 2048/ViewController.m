@@ -8,6 +8,9 @@
 
 #import "ViewController.h"
 
+NSInteger highScore;
+NSInteger currentScore;
+
 @interface ViewController ()
 
 @end
@@ -17,6 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    currentScore = 0;
+    highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"highScore"];
+    [_highScoreLabel setText:[NSString stringWithFormat:@"High Score: %ld",highScore]];
     [_table enumarate];
 }
 
@@ -25,8 +31,79 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)newGame:(id)sender {
+    currentScore = 0;
+    [_table enumarate];
+    [self updateScore];
+}
+
+-(void)checkEnd{
+    NSMutableArray *empties = [_table emptyTiles];
+    bool gameOver = false;
+    u_int32_t length = (int)[empties count];
+    NSInteger tileValue1,tileValue2,tileValue3;
+    if(length == 0){
+        gameOver = true;
+        Tile *tile1,*tile2,*tile3;
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                tile1 = [_table.tiles objectAtIndex:4*i+j];
+                tile2 = [_table.tiles objectAtIndex:4*i+j+1];
+                tile3 = [_table.tiles objectAtIndex:4*i+j+4];
+                tileValue1 = [tile1.valueLabel.text integerValue];
+                tileValue2 = [tile2.valueLabel.text integerValue];
+                tileValue3 = [tile3.valueLabel.text integerValue];
+                if(tileValue1 == tileValue2 ||tileValue1 == tileValue3){
+                    gameOver = false;
+                    break;
+                }
+            }
+        }
+    }
+    if(gameOver){
+        UIAlertController * alert=   [UIAlertController
+                                      alertControllerWithTitle:@"Game Over!!!"
+                                      message:[NSString stringWithFormat:@"Game Over"]
+                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+        UIAlertAction* ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    
+        UIAlertAction* retry = [UIAlertAction
+                                actionWithTitle:@"Retry"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    [alert dismissViewControllerAnimated:YES completion:nil];
+                                    currentScore = 0;
+                                    [_table enumarate];
+                                    [self updateScore];
+                                }];
+
+    
+        [alert addAction:ok];
+        [alert addAction:retry];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+}
+
+-(void)updateScore{
+    if(currentScore > highScore){
+        highScore = currentScore;
+        [[NSUserDefaults standardUserDefaults] setInteger:highScore forKey:@"highScore"];
+    }
+    [_scoreLabel setText:[NSString stringWithFormat:@"Score: %ld",currentScore]];
+    [_highScoreLabel setText:[NSString stringWithFormat:@"High Score: %ld",highScore]];
+}
 
 - (IBAction)upSwiped:(id)sender {
+    [self checkEnd];
     bool valid = false;
     Tile *tile1,*tile2;
     NSInteger tileValue1,tileValue2;
@@ -55,9 +132,13 @@
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
                     [tile1.valueLabel setText:@""];
+                    [tile1 checkLabel];
+                    [tile2 checkLabel];
                     tile1.empty = true;
                     tile2.empty = false;
                     valid = true;
+                    currentScore += tileValue1+tileValue2;
+                    [self updateScore];
                 }
                 else{
                     tile2 = [_table getDown:tile2];
@@ -67,6 +148,8 @@
                         tileValue2 = [tile1.valueLabel.text integerValue];
                         [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                         [tile1.valueLabel setText:nil];
+                        [tile1 checkLabel];
+                        [tile2 checkLabel];
                         tile2.empty = false;
                         tile1.empty = true;
                         valid = true;
@@ -80,6 +163,8 @@
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
+                [tile1 checkLabel];
+                [tile2 checkLabel];
                 tile2.empty = false;
                 tile1.empty = true;
                 valid = true;
@@ -93,6 +178,7 @@
 
 }
 - (IBAction)rightSwiped:(id)sender {
+    [self checkEnd];
     bool valid = false;
     Tile *tile1,*tile2;
     NSInteger tileValue1,tileValue2;
@@ -121,9 +207,13 @@
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
                     [tile1.valueLabel setText:@""];
+                    [tile1 checkLabel];
+                    [tile2 checkLabel];
                     tile1.empty = true;
                     tile2.empty = false;
                     valid = true;
+                    currentScore += tileValue1+tileValue2;
+                    [self updateScore];
                 }
                 else{
                     tile2 = [_table getLeft:tile2];
@@ -133,6 +223,8 @@
                         tileValue2 = [tile1.valueLabel.text integerValue];
                         [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                         [tile1.valueLabel setText:nil];
+                        [tile1 checkLabel];
+                        [tile2 checkLabel];
                         tile2.empty = false;
                         tile1.empty = true;
                         valid = true;
@@ -146,6 +238,8 @@
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
+                [tile1 checkLabel];
+                [tile2 checkLabel];
                 tile2.empty = false;
                 tile1.empty = true;
                 valid = true;
@@ -158,6 +252,7 @@
         [_table addNum];
 }
 - (IBAction)downSwiped:(id)sender {
+    [self checkEnd];
     bool valid = false;
     Tile *tile1,*tile2;
     NSInteger tileValue1,tileValue2;
@@ -186,9 +281,13 @@
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
                     [tile1.valueLabel setText:@""];
+                    [tile1 checkLabel];
+                    [tile2 checkLabel];
                     tile1.empty = true;
                     tile2.empty = false;
                     valid = true;
+                    currentScore += tileValue1+tileValue2;
+                    [self updateScore];
                 }
                 else{
                     tile2 = [_table getUp:tile2];
@@ -198,6 +297,8 @@
                         tileValue2 = [tile1.valueLabel.text integerValue];
                         [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                         [tile1.valueLabel setText:nil];
+                        [tile1 checkLabel];
+                        [tile2 checkLabel];
                         tile2.empty = false;
                         tile1.empty = true;
                         valid = true;
@@ -211,6 +312,8 @@
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
+                [tile1 checkLabel];
+                [tile2 checkLabel];
                 tile2.empty = false;
                 tile1.empty = true;
                 valid = true;
@@ -223,6 +326,7 @@
         [_table addNum];
 }
 - (IBAction)leftSwiped:(id)sender {
+    [self checkEnd];
     bool valid = false;
     Tile *tile1,*tile2;
     NSInteger tileValue1,tileValue2;
@@ -251,9 +355,13 @@
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
                     [tile1.valueLabel setText:@""];
+                    [tile1 checkLabel];
+                    [tile2 checkLabel];
                     tile1.empty = true;
                     tile2.empty = false;
                     valid = true;
+                    currentScore += tileValue1+tileValue2;
+                    [self updateScore];
                 }
                 else{
                     tile2 = [_table getRight:tile2];
@@ -263,6 +371,8 @@
                         tileValue2 = [tile1.valueLabel.text integerValue];
                         [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                         [tile1.valueLabel setText:nil];
+                        [tile1 checkLabel];
+                        [tile2 checkLabel];
                         tile2.empty = false;
                         tile1.empty = true;
                         valid = true;
@@ -276,6 +386,8 @@
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
+                [tile1 checkLabel];
+                [tile2 checkLabel];
                 tile2.empty = false;
                 tile1.empty = true;
                 valid = true;

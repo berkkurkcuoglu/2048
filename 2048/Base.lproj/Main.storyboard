@@ -26,6 +26,49 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVw-dI-zld">
+                                <rect key="frame" x="20" y="47" width="170" height="79"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Score: 0">
+                                        <attributes>
+                                            <font key="NSFont" size="24" name="ComicSansMS-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGh-D8-8te">
+                                <rect key="frame" x="94" y="556" width="226" height="105"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="New Game">
+                                            <attributes>
+                                                <font key="NSFont" size="36" name="ComicSansMS"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <connections>
+                                    <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lb5-cj-W80"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzU-UO-SCm">
+                                <rect key="frame" x="178" y="47" width="216" height="79"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="High Score:">
+                                        <attributes>
+                                            <font key="NSFont" size="24" name="ComicSansMS-Bold"/>
+                                            <font key="NSOriginalFont" size="36" name="ComicSansMS-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -38,8 +81,11 @@
                     </view>
                     <connections>
                         <outlet property="downSwipe" destination="BLF-Nn-rKg" id="hqc-66-vBZ"/>
+                        <outlet property="gameButton" destination="bGh-D8-8te" id="Gdt-Yh-JGi"/>
+                        <outlet property="highScoreLabel" destination="RzU-UO-SCm" id="ge5-YC-Tsw"/>
                         <outlet property="leftSwipe" destination="sYM-Mh-9Kj" id="GCZ-b7-cJr"/>
                         <outlet property="rightSwipe" destination="JsG-Jn-5my" id="TnR-PF-Wmr"/>
+                        <outlet property="scoreLabel" destination="NVw-dI-zld" id="zws-Fy-cPE"/>
                         <outlet property="table" destination="rzU-Eh-ols" id="y7Z-Za-ETE"/>
                         <outlet property="upSwipe" destination="hGS-RQ-7ps" id="uBz-FS-pDl"/>
                     </connections>

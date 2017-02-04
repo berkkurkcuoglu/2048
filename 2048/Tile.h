@@ -11,7 +11,6 @@
 @interface Tile : UIView
 
 @property (strong, nonatomic) IBOutlet UIView *view;
-@property (assign) int value;
 @property (assign) boolean_t empty;
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
 -(void)checkLabel;

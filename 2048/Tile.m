@@ -10,20 +10,13 @@
 
 @implementation Tile
 
-@synthesize view,value,empty,valueLabel;
+@synthesize view,empty,valueLabel;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     
 }*/
-/*-(id)initWithCoder:(NSCoder *)aDecoder{
-    if((self = [super initWithCoder:aDecoder])){
-        [self addSubview:[[[NSBundle mainBundle] loadNibNamed:@"TileView" owner:self options:nil] objectAtIndex:0]];
-    }
-    return self;
-}
-*/
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -75,7 +68,126 @@
 }
 
 -(void)checkLabel {
-    valueLabel.text = [NSString stringWithFormat:@"%d",value];
+     NSInteger value = [valueLabel.text integerValue];
+    switch (value) {
+        case 2:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:242.0/255.0
+                                                                 green:230.0/255.0
+                                                                  blue:217.0/255.0
+                                                                 alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:119.0/255.0
+                                                      green:110.0/255.0
+                                                       blue:101.0/255.0
+                                                      alpha:1.0]];
+
+            break;
+            case 4:
+            [self->valueLabel setBackgroundColor:[UIColor  colorWithRed:255.0/255.0
+                                                                   green:241.0/255.0
+                                                                    blue:204.0/255.0
+                                                                   alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:119.0/255.0
+                                                           green:110.0/255.0
+                                                            blue:101.0/255.0
+                                                           alpha:1.0]];
+            break;
+            case 8:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:255.0/255.0
+                                                                 green:179.0/255.0
+                                                                  blue:102.0/255.0
+                                                                 alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:255.0/255.0
+                                                           green:255.0/255.0
+                                                            blue:255.0/255.0
+                                                           alpha:1.0]];
+                break;
+           case 16:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:255.0/255.0
+                                                                                        green:133.0/255.0
+                                                                                         blue:51.0/255.0
+                                                                                        alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:255.0/255.0
+                                                           green:255.0/255.0
+                                                            blue:255.0/255.0
+                                                           alpha:1.0]];
+               break;
+            case 32:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:255.0/255.0
+                                                                                        green:92.0/255.0
+                                                                                         blue:51.0/255.0
+                                                                                        alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:255.0/255.0
+                                                           green:255.0/255.0
+                                                            blue:255.0/255.0
+                                                           alpha:1.0]];
+                break;
+            case 64:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:255.0/255.0
+                                                                                        green:64.0/255.0
+                                                                                         blue:10.0/255.0
+                                                                                        alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:255.0/255.0
+                                                           green:255.0/255.0
+                                                            blue:255.0/255.0
+                                                           alpha:1.0]];
+                break;
+            case 128:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:255.0/255.0
+                                                                                        green:219.0/255.0
+                                                                                         blue:77.0/255.0
+                                                                                        alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:255.0/255.0
+                                                           green:255.0/255.0
+                                                            blue:255.0/255.0
+                                                           alpha:1.0]];
+                break;
+            case 256:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:230.0/255.0
+                                                                                        green:184.0/255.0
+                                                                                         blue:0.0/255.0
+                                                                                        alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:255.0/255.0
+                                                           green:255.0/255.0
+                                                            blue:255.0/255.0
+                                                           alpha:1.0]];
+                break;
+            case 512:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:204.0/255.0
+                                                                                        green:163.0/255.0
+                                                                                         blue:10.0/255.0
+                                                                                        alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:255.0/255.0
+                                                           green:255.0/255.0
+                                                            blue:255.0/255.0
+                                                           alpha:1.0]];
+                break;
+            case 1024:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:179.0/255.0
+                                                                                        green:143.0/255.0
+                                                                                         blue:6.0/255.0
+                                                                                        alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:255.0/255.0
+                                                           green:255.0/255.0
+                                                            blue:255.0/255.0
+                                                           alpha:1.0]];
+                break;
+            case 2048:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:253.0/255.0
+                                                                                        green:122.0/255.0
+                                                                                         blue:5.0/255.0
+                                                                                        alpha:1.0]];
+            [self->valueLabel setTextColor:[UIColor colorWithRed:255.0/255.0
+                                                           green:255.0/255.0
+                                                            blue:255.0/255.0
+                                                           alpha:1.0]];
+                break;
+            default:
+            [self->valueLabel setBackgroundColor:[UIColor colorWithRed:205.0/255.0
+                                                                 green:193.0/255.0
+                                                                  blue:180.0/255.0
+                                                                 alpha:1.0]];
+            break;
+    }
 
 }
 @end

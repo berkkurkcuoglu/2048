@@ -17,6 +17,11 @@
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *rightSwipe;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *downSwipe;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *leftSwipe;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *highScoreLabel;
+@property (weak, nonatomic) IBOutlet UIButton *gameButton;
+
+- (void)updateScore;
 
 @end
 

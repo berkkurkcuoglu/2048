@@ -20,11 +20,15 @@
 */
 - (void)enumarate
 {
-    //int counter = 1;
     for (Tile *tl in self.tiles) {
+        [tl.valueLabel setText:@""];
         tl.empty = true;
-        //[tl.valueLabel setText:[NSString stringWithFormat:@"%d",counter]];
-       // counter++;
+        tl.valueLabel.textColor = [UIColor colorWithRed:119.0/255.0
+                                          green:110.0/255.0
+                                           blue:101.0/255.0
+                                          alpha:1.0];
+
+        [tl checkLabel];
     }
     u_int32_t index1 = arc4random_uniform(16);
     u_int32_t index2 = arc4random_uniform(16);
@@ -35,6 +39,8 @@
     tile2 = [_tiles objectAtIndex:index2];
     [tile1.valueLabel setText:[NSString stringWithFormat:@"%d",2]];
     [tile2.valueLabel setText:[NSString stringWithFormat:@"%d",2]];
+    [tile1 checkLabel];
+    [tile2 checkLabel];
     tile1.empty = false;
     tile2.empty = false;    
 }
@@ -57,7 +63,12 @@
     Tile *tile;
     NSUInteger uIndex = [tileIndex integerValue];
     tile = [_tiles objectAtIndex:uIndex];
-    [tile.valueLabel setText:[NSString stringWithFormat:@"%d",2]];
+     u_int32_t randomNumber = arc4random_uniform(10);
+    if(randomNumber > 0)
+        [tile.valueLabel setText:[NSString stringWithFormat:@"%d",2]];
+    else
+        [tile.valueLabel setText:[NSString stringWithFormat:@"%d",4]];
+    [tile checkLabel];
     tile.empty = false;
 }
 -(bool)compValues:(Tile*) tile1 :(Tile*) tile2{
