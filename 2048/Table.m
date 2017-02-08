@@ -27,7 +27,6 @@
                                           green:110.0/255.0
                                            blue:101.0/255.0
                                           alpha:1.0];
-
         [tl checkLabel];
     }
     u_int32_t index1 = arc4random_uniform(16);
@@ -37,8 +36,12 @@
     Tile *tile1,*tile2;
     tile1 = [_tiles objectAtIndex:index1];
     tile2 = [_tiles objectAtIndex:index2];
+    u_int32_t randomNumber = arc4random_uniform(10);
+    if(randomNumber > 0)
+        [tile2.valueLabel setText:[NSString stringWithFormat:@"%d",2]];
+    else
+        [tile2.valueLabel setText:[NSString stringWithFormat:@"%d",4]];
     [tile1.valueLabel setText:[NSString stringWithFormat:@"%d",2]];
-    [tile2.valueLabel setText:[NSString stringWithFormat:@"%d",2]];
     [tile1 checkLabel];
     [tile2 checkLabel];
     tile1.empty = false;

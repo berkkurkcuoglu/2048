@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AudioToolbox/AudioToolbox.h"
 
 NSInteger highScore;
 NSInteger currentScore;
@@ -31,6 +32,7 @@ NSInteger currentScore;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (IBAction)newGame:(id)sender {
     currentScore = 0;
     [_table enumarate];
@@ -112,13 +114,11 @@ NSInteger currentScore;
             tile1 = [_table.tiles objectAtIndex:4*i+j];
             if(tile1.empty)
                 continue;
-            NSLog(@"tile1: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
             for(int k=0; k< i ; k++){
                 if( k> 0)
                     tile2 = [_table getUp:tile2];
                 else
                     tile2 = [_table getUp:tile1];
-                NSLog(@"tile2: %lu", (unsigned long)[_table.tiles indexOfObject:tile2]);
                 if(!tile2.empty){
                     break;
                 }
@@ -126,8 +126,6 @@ NSInteger currentScore;
             }
             if(!tile2.empty){
                 if([_table compValues:tile1 :tile2]){
-                    NSLog(@"tile11: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                    NSLog(@"tile22: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                     tileValue1 = [tile1.valueLabel.text integerValue];
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
@@ -143,8 +141,6 @@ NSInteger currentScore;
                 else{
                     tile2 = [_table getDown:tile2];
                     if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
-                        NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                        NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                         tileValue2 = [tile1.valueLabel.text integerValue];
                         [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                         [tile1.valueLabel setText:nil];
@@ -157,9 +153,6 @@ NSInteger currentScore;
                 }
             }
             else{
-                //if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
-                NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
@@ -168,7 +161,6 @@ NSInteger currentScore;
                 tile2.empty = false;
                 tile1.empty = true;
                 valid = true;
-                //}
             }
             
         }
@@ -187,13 +179,11 @@ NSInteger currentScore;
             tile1 = [_table.tiles objectAtIndex:4*i+j];
             if(tile1.empty)
                 continue;
-            NSLog(@"tile1: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
             for(int k=0; k< 3-j ; k++){
                 if( k> 0)
                     tile2 = [_table getRight:tile2];
                 else
                     tile2 = [_table getRight:tile1];
-                NSLog(@"tile2: %lu", (unsigned long)[_table.tiles indexOfObject:tile2]);
                 if(!tile2.empty){
                     break;
                 }
@@ -201,8 +191,6 @@ NSInteger currentScore;
             }
             if(!tile2.empty){
                 if([_table compValues:tile1 :tile2]){
-                    NSLog(@"tile11: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                    NSLog(@"tile22: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                     tileValue1 = [tile1.valueLabel.text integerValue];
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
@@ -218,8 +206,6 @@ NSInteger currentScore;
                 else{
                     tile2 = [_table getLeft:tile2];
                     if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
-                        NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                        NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                         tileValue2 = [tile1.valueLabel.text integerValue];
                         [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                         [tile1.valueLabel setText:nil];
@@ -232,9 +218,6 @@ NSInteger currentScore;
                 }
             }
             else{
-                //if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
-                NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
@@ -243,7 +226,6 @@ NSInteger currentScore;
                 tile2.empty = false;
                 tile1.empty = true;
                 valid = true;
-                //}
             }
             
         }
@@ -261,13 +243,11 @@ NSInteger currentScore;
             tile1 = [_table.tiles objectAtIndex:4*i+j];
             if(tile1.empty)
                 continue;
-            NSLog(@"tile1: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
             for(int k=0; k< 3-i ; k++){
                 if( k> 0)
                     tile2 = [_table getDown:tile2];
                 else
                     tile2 = [_table getDown:tile1];
-                NSLog(@"tile2: %lu", (unsigned long)[_table.tiles indexOfObject:tile2]);
                 if(!tile2.empty){
                     break;
                 }
@@ -275,8 +255,6 @@ NSInteger currentScore;
             }
             if(!tile2.empty){
                 if([_table compValues:tile1 :tile2]){
-                    NSLog(@"tile11: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                    NSLog(@"tile22: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                     tileValue1 = [tile1.valueLabel.text integerValue];
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
@@ -292,8 +270,6 @@ NSInteger currentScore;
                 else{
                     tile2 = [_table getUp:tile2];
                     if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
-                        NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                        NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                         tileValue2 = [tile1.valueLabel.text integerValue];
                         [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                         [tile1.valueLabel setText:nil];
@@ -306,9 +282,6 @@ NSInteger currentScore;
                 }
             }
             else{
-                //if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
-                NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
@@ -317,7 +290,6 @@ NSInteger currentScore;
                 tile2.empty = false;
                 tile1.empty = true;
                 valid = true;
-                //}
             }
             
         }
@@ -335,13 +307,11 @@ NSInteger currentScore;
             tile1 = [_table.tiles objectAtIndex:4*i+j];
             if(tile1.empty)
                 continue;
-            NSLog(@"tile1: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
             for(int k=0; k<j ; k++){
                 if( k> 0)
                     tile2 = [_table getLeft:tile2];
                 else
                     tile2 = [_table getLeft:tile1];
-                NSLog(@"tile2: %lu", (unsigned long)[_table.tiles indexOfObject:tile2]);
                 if(!tile2.empty){
                     break;
                 }
@@ -349,8 +319,6 @@ NSInteger currentScore;
             }
             if(!tile2.empty){
                 if([_table compValues:tile1 :tile2]){
-                    NSLog(@"tile11: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                    NSLog(@"tile22: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                     tileValue1 = [tile1.valueLabel.text integerValue];
                     tileValue2 = [tile2.valueLabel.text integerValue];
                     [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue1+tileValue2]];
@@ -366,8 +334,6 @@ NSInteger currentScore;
                 else{
                     tile2 = [_table getRight:tile2];
                     if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
-                        NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                        NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                         tileValue2 = [tile1.valueLabel.text integerValue];
                         [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                         [tile1.valueLabel setText:nil];
@@ -380,9 +346,6 @@ NSInteger currentScore;
                 }
             }
             else{
-                //if([_table.tiles indexOfObject:tile1] != [_table.tiles indexOfObject:tile2]){
-                NSLog(@"tile111: %lu", (unsigned long)[_table.tiles indexOfObject:tile1]);
-                NSLog(@"tile222: %lu" ,(unsigned long)[_table.tiles indexOfObject:tile2]);
                 tileValue2 = [tile1.valueLabel.text integerValue];
                 [tile2.valueLabel setText:[NSString stringWithFormat:@"%ld",tileValue2]];
                 [tile1.valueLabel setText:nil];
@@ -391,7 +354,6 @@ NSInteger currentScore;
                 tile2.empty = false;
                 tile1.empty = true;
                 valid = true;
-                //}
             }
             
         }

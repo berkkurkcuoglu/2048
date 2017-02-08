@@ -22,6 +22,7 @@
 {
     self = [super initWithCoder:aDecoder];
     valueLabel.adjustsFontSizeToFitWidth = YES;
+    valueLabel.minimumScaleFactor = 0.4;
     empty = false;
     if (self)
     {
